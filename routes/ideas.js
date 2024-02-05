@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const Idea = require('../models/Idea');//brings model in. enable us to get ideas from the db direct instead of from the ideas file
 
 const ideas = [
     {
@@ -27,8 +27,13 @@ const ideas = [
   ];
 
 // Get all ideas
-router.get('/', (req, res) => {
-  res.json({ success: true, data: ideas });
+router.get('/', async (req, res) => { // async provides a promise and await
+  try {
+    const ideas = await Idea.find();//we get the ideas from the db by calling await and use find() method on Idea model to find all ideas
+    res.json({ success: true, data: ideas });//this is the response
+  } catch (error) { //if something goes wrong
+    res.status(500).json({ success: false, error: 'Something went wrong'})
+  }
 });
 
 // Get single idea

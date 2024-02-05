@@ -16,5 +16,5 @@ const IdeaSchema = new mongoose.Schema({ //create a new mongoose schema instance
         default: Date.now
     }
 });
-
+//exporting this to routes folder
 module.exports = mongoose.model('Idea', IdeaSchema); //exporting the Idea file and the Idea schema we just created
