@@ -38,16 +38,14 @@ router.get('/', async (req, res) => { // async provides a promise and await
 });
 
 // Get single idea
-router.get('/:id', (req, res) => {
-  const idea = ideas.find((idea) => idea.id === +req.params.id);
-
-  if (!idea) {
-    return res
-      .status(404)
-      .json({ success: false, error: 'Resource not found' });
+router.get('/:id', async (req, res) => {
+  try {
+    const idea = await Idea.findById(req.params.id);
+    res.json({ success: true, data: idea });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, error: 'Something went wrong' });
   }
-
-  res.json({ success: true, data: idea });
 });
 
 // Add an idea
@@ -60,8 +58,8 @@ router.post('/', async (req, res) => {
   });
 
   try { //using try on the idea object instantiated by the constructor, instead of the Idea model
-    const savedIDea = await idea.save();//calling save method to save the idea object to the db
-    res.json({ success: true, data: savedIDea}) //sending savedIdea back to the client
+    const savedIdea = await idea.save();//calling save method to save the idea object to the db
+    res.json({ success: true, data: savedIdea}) //sending savedIdea back to the client
   } catch (error) {
     res.status(500).json({ success: false, error: 'Something went wrong'})
     console.log(error);
