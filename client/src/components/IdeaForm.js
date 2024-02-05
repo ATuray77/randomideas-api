@@ -1,6 +1,16 @@
 class IdeaForm{
     constructor() {
         this._formModal = document.querySelector('#form-modal')
+        
+   }
+
+   addEventListeners() {
+    this._form.addEventListener('submit', this.handleSubmit.bind(this));
+   }
+
+   handleSubmit(e) {
+    e.preventDefault();
+    console.log('submit');
    }
 
    render() { //render outputs the html
@@ -21,6 +31,9 @@ class IdeaForm{
           <button class="btn" type="submit" id="submit">Submit</button>
         </form>
     `;
+
+    this._form = document.querySelector('#idea-form')
+        this.addEventListeners();
    }
 }
 
