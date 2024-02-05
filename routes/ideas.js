@@ -33,6 +33,7 @@ router.get('/', async (req, res) => { // async provides a promise and await
     res.json({ success: true, data: ideas });//this is the response
   } catch (error) { //if something goes wrong
     res.status(500).json({ success: false, error: 'Something went wrong'})
+    console.log(error)
   }
 });
 
@@ -50,18 +51,21 @@ router.get('/:id', (req, res) => {
 });
 
 // Add an idea
-router.post('/', (req, res) => {
-  const idea = {
-    id: ideas.length + 1,
-    text: req.body.text,
+//we want to instantiate our new idea using our model. ID is automatically provided by mongodb, date is now a default value prescribed in the model
+router.post('/', async (req, res) => {
+  const idea = new Idea ({ //all the following information are coming from the http request body
+    text: req.body.text, 
     tag: req.body.tag,
     username: req.body.username,
-    date: new Date().toISOString().slice(0, 10),
-  };
+  });
 
-  ideas.push(idea);
-
-  res.json({ success: true, data: idea });
+  try { //using try on the idea object instantiated by the constructor, instead of the Idea model
+    const savedIDea = await idea.save();//calling save method to save the idea object to the db
+    res.json({ success: true, data: savedIDea}) //sending savedIdea back to the client
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Something went wrong'})
+    console.log(error);
+  }
 });
 
 // Update idea
