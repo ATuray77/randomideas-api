@@ -67,19 +67,23 @@ router.post('/', async (req, res) => {
 });
 
 // Update idea
-router.put('/:id', (req, res) => {
-  const idea = ideas.find((idea) => idea.id === +req.params.id);
-
-  if (!idea) {
-    return res
-      .status(404)
-      .json({ success: false, error: 'Resource not found' });
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedIdea = await Idea.findByIdAndUpdate( //put in a variable cause we want to return it later
+      req.params.id, //grabs it from the http request
+      {
+        $set: {
+          text: req.body.text,
+          tag: req.body.tag,
+        },
+      },
+      { new: true } //if that idea doesn't exist with that id it will create a new one
+    );
+    res.json({ success: true, data: updatedIdea });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, error: 'Something went wrong' });
   }
-
-  idea.text = req.body.text || idea.text;
-  idea.tag = req.body.tag || idea.tag;
-
-  res.json({ success: true, data: idea });
 });
 
 // Delete idea
