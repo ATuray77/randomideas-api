@@ -2,6 +2,12 @@ class Modal {
     constructor() {
         this._modal = document.querySelector('#modal');
         this._modalBtn = document.querySelector('#modal-btn');
+        this.addEventListeners(); //calling it in here cause this constructor runs right away
+    }
+
+    addEventListeners() {
+        this._modalBtn.addEventListener('click', this.open.bind(this));
+        window.addEventListener('click', this.outsideClick.bind(this));
     }
 
     open() {
@@ -18,3 +24,5 @@ class Modal {
         }
     }
 }
+
+export default Modal; 
