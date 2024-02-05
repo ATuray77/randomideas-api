@@ -89,7 +89,7 @@ router.put('/:id', async (req, res) => {
 // Delete idea
 router.delete('/:id', async (req, res) => {
   try {
-    await Idea.findByIdAndDelete(req.params.id); //grabs the 
+    await Idea.findByIdAndDelete(req.params.id); //grabs the id from the http request of ideas to be deleted
     res.json({ success: true, data: {} });
   } catch (error) {
     console.log(error);
