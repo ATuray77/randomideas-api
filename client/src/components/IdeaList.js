@@ -66,9 +66,11 @@ class IdeaList{
     render() { //using map on the array for each one and display them
         this._ideaListEl.innerHTML = this._ideas.map((idea) => {
             const tagClass = this.getTagClass(idea.tag)
+            const deleteBtn = idea.username === localStorage.
+            getItem('username') ? `<button class="delete"><i class="fas fa-times"></i></button>`: '';
             return `
             <div class="card" data-id="${idea._id}">
-            <button class="delete"><i class="fas fa-times"></i></button>
+            ${deleteBtn}
             <h3>
               ${idea.text}
             </h3>
