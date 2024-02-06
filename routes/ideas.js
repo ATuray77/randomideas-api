@@ -69,7 +69,11 @@ router.post('/', async (req, res) => {
 // Update idea
 router.put('/:id', async (req, res) => {
   try {
-    const updatedIdea = await Idea.findByIdAndUpdate( //put in a variable cause we want to return it later
+    const idea = await Idea.findById(req.params.id);
+
+    //match the usernames
+    if (idea.username === req.body.username) {
+      const updatedIdea = await Idea.findByIdAndUpdate( //put in a variable cause we want to return it later
       req.params.id, //grabs it from the http request
       {
         $set: {
@@ -79,18 +83,32 @@ router.put('/:id', async (req, res) => {
       },
       { new: true } //if that idea doesn't exist with that id it will create a new one
     );
-    res.json({ success: true, data: updatedIdea });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, error: 'Something went wrong' });
-  }
+    return res.json({ success: true, data: updatedIdea });
+  } 
+  //username does not match
+  res
+  .status(403)
+  .json({
+    success: false,
+    error: 'You are not authorized to update this resource',
+  });
+} catch (error) {
+console.log(error);
+res.status(500).json({ success: false, error: 'Something went wrong' });
+}
 });
 
 // Delete idea
 router.delete('/:id', async (req, res) => {
   try {
-    await Idea.findByIdAndDelete(req.params.id); //grabs the id from the http request of ideas to be deleted
-    res.json({ success: true, data: {} });
+    const idea = await Idea.findById(req.params.id);
+    //match the usernames
+    if (idea.username === req.body.username) {
+      await Idea.findByIdAndDelete(req.params.id); //grabs the id from the http request of ideas to be deleted
+      return res.json({ success: true, data: {} });
+    }
+    //usernames do not match
+    res.status(403).json({ success: false, error: 'You are not authorized to delete this resource' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, error: 'Something went wrong' });
