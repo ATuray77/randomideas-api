@@ -18,7 +18,8 @@ class IdeaList{
         this._ideaListEl.addEventListener('click', (e) => {
             if (e.target.classList.contains('fa-times')) {
                 e.stopImmediatePropagation(); //targeting only the x button and prevent that action to propagate up
-                
+                const ideaId = e.target.parentElement.parentElement.dataset.id;//dataset is the custom id
+                this.deleteIDea(ideaId)
             }
         })
     }
@@ -31,6 +32,17 @@ class IdeaList{
         } catch (error) {
             console.log(error)
             
+        }
+    }
+
+    async deleteIDea(ideaId) {
+        try {
+           //delete from server 
+           const res = await IdeasApi.deleteIdea(ideaId);
+           this._ideas.filter((idea) => idea._id !== ideaId);//to delete from the DOM. filter out the idea id that was passed in
+           this.getIdeas(); //grabs all the new ideas without the one that was filtered out 
+        } catch (error) {
+            alert("You cannot delete this resource")
         }
     }
 
@@ -68,6 +80,8 @@ class IdeaList{
           </div>
             `;
         }).join('');//turn it back into a string
+
+        this.addEventLIsteners(); //we place it here cause we want it to run after the html page is rendered
 
     }
 }
