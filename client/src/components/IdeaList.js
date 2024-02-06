@@ -25,6 +25,11 @@ class IdeaList{
         }
     }
 
+    addIdeaToList(idea) { //this will push post to the dom automatically
+        this._ideas.push(idea);
+        this.render(); //rerender the component after pushing the idea
+    }
+
     getTagClass(tag){ //we want to be able to call the cards in our render to get the correct class to add as tag
         tag = tag.toLowerCase();
         let tagClass = ''; 

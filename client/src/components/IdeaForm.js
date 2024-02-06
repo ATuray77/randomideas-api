@@ -1,9 +1,10 @@
 import IdeasApi from "../services/ideasApi";
+import IdeaList from "./IdeaList";
 
 class IdeaForm{
     constructor() {
         this._formModal = document.querySelector('#form-modal')
-        
+        this._ideaList = new IdeaList(); //instantiating the new Idealist since it's a class        
    }
 
    addEventListeners() {
@@ -20,7 +21,11 @@ class IdeaForm{
         username: this._form.elements.username.value,
     }
     
+    //add idea to server
     const newIdea = await IdeasApi.createIdeas(idea)
+
+    //add idea to list
+    this._ideaList.addIdeaToList(newIdea.data.data);//returns the whole data
 
     //clear fields
     this._form.elements.text.value = ''
