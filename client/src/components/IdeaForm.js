@@ -22,7 +22,9 @@ class IdeaForm{
         alert('Please enter all fields');
         return;
       }
-  
+      
+      //save user to local storage
+      localStorage.setItem('username', this._form.elements.username.value);
     
     //instead of accessing each input separately, we want to access them at once
     const idea = { //by creating an object targeting the name tag on the elements
@@ -42,6 +44,8 @@ class IdeaForm{
     this._form.elements.tag.value = ''
     this._form.elements.username.value = ''
 
+    this.render(); //rerenders the form after clearing the fields
+
     document.dispatchEvent(new Event('closemodal'));// now we have to listen for this event in modal
    }
 
@@ -50,7 +54,8 @@ class IdeaForm{
     <form id="idea-form">
           <div class="form-control">
             <label for="idea-text">Enter a Username</label>
-            <input type="text" name="username" id="username" />
+            <input type="text" name="username" id="username" 
+            value="${localStorage.getItem('username') ? localStorage.getItem('username') : ''}"/>
           </div>
           <div class="form-control">
             <label for="idea-text">What's Your Idea?</label>
