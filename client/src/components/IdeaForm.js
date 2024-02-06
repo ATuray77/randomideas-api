@@ -17,8 +17,13 @@ class IdeaForm{
         tag: this._form.elements.tag.value,
         username: this._form.elements.username.value,
     }
-
     console.log(idea)
+    //clear fields
+    this._form.elements.text.value = ''
+    this._form.elements.tag.value = ''
+    this._form.elements.username.value = ''
+
+    document.dispatchEvent(new Event('closemodal'));// now we have to listen for this event in modal
    }
 
    render() { //render outputs the html
