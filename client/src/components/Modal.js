@@ -11,7 +11,7 @@ class Modal {
     }
 
     open() {
-        this._modal._style.display = 'block';
+        this._modal.style.display = 'block';
     }
     
     close() {

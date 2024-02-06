@@ -10,7 +10,15 @@ class IdeaForm{
 
    handleSubmit(e) {
     e.preventDefault();
-    console.log('submit');
+    
+    //instead of accessing each input separately, we want to access them at once
+    const idea = { //by creating an object targeting the name tag on the elements
+        text: this._form.elements.text.value,
+        tag: this._form.elements.tag.value,
+        username: this._form.elements.username.value,
+    }
+
+    console.log(idea)
    }
 
    render() { //render outputs the html
