@@ -17,8 +17,10 @@ class IdeaList{
     async getIdeas(){
         try {
             const res = await IdeasApi.getIdeas();
-            this._ideas = res.data
+            this._ideas = res.data.data
+            console.log(this._ideas)
         } catch (error) {
+            console.log(error)
             
         }
     }
