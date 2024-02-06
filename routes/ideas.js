@@ -102,13 +102,20 @@ res.status(500).json({ success: false, error: 'Something went wrong' });
 router.delete('/:id', async (req, res) => {
   try {
     const idea = await Idea.findById(req.params.id);
+
     //match the usernames
     if (idea.username === req.body.username) {
       await Idea.findByIdAndDelete(req.params.id); //grabs the id from the http request of ideas to be deleted
       return res.json({ success: true, data: {} });
     }
+
     //usernames do not match
-    res.status(403).json({ success: false, error: 'You are not authorized to delete this resource' });
+    res
+    .status(403)
+    .json({ 
+      success: false, 
+      error: 'You are not authorized to delete this resource' 
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, error: 'Something went wrong' });

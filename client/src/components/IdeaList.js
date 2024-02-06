@@ -14,6 +14,15 @@ class IdeaList{
         this._validTags.add('inventions');
     }
 
+    addEventLIsteners() { //using event delegation to put the click event on the entire but target the icon
+        this._ideaListEl.addEventListener('click', (e) => {
+            if (e.target.classList.contains('fa-times')) {
+                e.stopImmediatePropagation(); //targeting only the x button and prevent that action to propagate up
+                
+            }
+        })
+    }
+
     async getIdeas(){
         try {
             const res = await IdeasApi.getIdeas();
@@ -46,7 +55,7 @@ class IdeaList{
         this._ideaListEl.innerHTML = this._ideas.map((idea) => {
             const tagClass = this.getTagClass(idea.tag)
             return `
-            <div class="card">
+            <div class="card" data-id="${idea._id}">
             <button class="delete"><i class="fas fa-times"></i></button>
             <h3>
               ${idea.text}
