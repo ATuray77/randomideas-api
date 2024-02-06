@@ -1,4 +1,4 @@
-import IdeasApi from "../services/ideasApi" //from IdeasApi component
+import IdeasApi from '../services/ideasApi'//from IdeasApi component
 class IdeaList{
     constructor() {
         this._ideaListEl = document.querySelector('#idea-list');
@@ -17,8 +17,8 @@ class IdeaList{
     async getIdeas(){
         try {
             const res = await IdeasApi.getIdeas();
-            this._ideas = res.data.data
-            console.log(this._ideas)
+            this._ideas = res.data.data;
+            this.render();
         } catch (error) {
             console.log(error)
             

@@ -18,9 +18,14 @@ app.use(express.urlencoded({ extended: false }));
 
 //cors middleware. provides an array of url enable to make request from
 //app.use(cors())//this would allow request from anywhere. 
-app.use(cors({ //this allows to designate ports from which to make requests from
-  origin: ['http://localhost:5000, http://localhost:3000']
-}))
+//3000 is our frontend dev server and 5000 is our back end dev server
+//this allows to designate urls ports from which to make requests from
+app.use(
+  cors({ 
+  origin: ['http://localhost:5000', 'http://localhost:3000'],
+  credentials: true
+})
+); 
 
 app.get('/', (req, res) => {
     res.json({ Message: 'Welcome to the RandomIdeas API'});

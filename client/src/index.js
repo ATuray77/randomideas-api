@@ -11,6 +11,6 @@ const ideaForm= new IdeaForm();
 ideaForm.render(); //calling render on the ideaForm for display to the DOM
 
 const ideaList = new IdeaList();
-ideaList.render();
+
 
 
