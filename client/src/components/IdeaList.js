@@ -1,29 +1,14 @@
 class IdeaList{
     constructor() {
         this._ideaListEl = document.querySelector('#idea-list');
-        this._ideas = [
-            {
-            id: 1,
-            text: 'Idea 1',
-            tag: 'Business',
-            username: 'Aruna',
-            date: '02/01/2024'
-            },
-            {
-                id: 2,
-                text: 'Idea 2',
-                tag: 'Technology',
-                username: 'Denzel',
-                date: '03/01/2024'
-                }
-        ];
+        this._ideas = [];
         this._validTags = new Set(); //to maintain unique values
-        this._validTags.add('technology,');//using the add method to fill them in 
-        this._validTags.add('software,');
-        this._validTags.add('business,');
-        this._validTags.add('education,');
-        this._validTags.add('health,');
-        this._validTags.add('inventions,');
+        this._validTags.add('technology');//using the add method to fill them in 
+        this._validTags.add('software');
+        this._validTags.add('business');
+        this._validTags.add('education');
+        this._validTags.add('health');
+        this._validTags.add('inventions');
     }
 
     getTagClass(tag){ //we want to be able to call the cards in our render to get the correct class to add as tag
@@ -35,7 +20,7 @@ class IdeaList{
             tagClass = '';
         }
 
-        return tagClass
+        return tagClass;
     }
 
     render() { //using map on the array for each one and display them
@@ -47,14 +32,14 @@ class IdeaList{
             <h3>
               ${idea.text}
             </h3>
-            <p class="${tagClass}">${idea.tag.toUpperCase()}</p>
+            <p class="tag ${tagClass}">${idea.tag.toUpperCase()}</p>
             <p>
               Posted on <span class="date">${idea.date}</span> by
               <span class="author">${idea.username}</span>
             </p>
           </div>
             `;
-        }).join('')//turn it back into a string
+        }).join('');//turn it back into a string
 
     }
 }
