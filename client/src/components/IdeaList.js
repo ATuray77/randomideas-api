@@ -1,7 +1,10 @@
+import IdeasApi from "../services/ideasApi" //from IdeasApi component
 class IdeaList{
     constructor() {
         this._ideaListEl = document.querySelector('#idea-list');
         this._ideas = [];
+        this.getIdeas();
+
         this._validTags = new Set(); //to maintain unique values
         this._validTags.add('technology');//using the add method to fill them in 
         this._validTags.add('software');
@@ -9,6 +12,15 @@ class IdeaList{
         this._validTags.add('education');
         this._validTags.add('health');
         this._validTags.add('inventions');
+    }
+
+    async getIdeas(){
+        try {
+            const res = await IdeasApi.getIdeas();
+            this._ideas = res.data
+        } catch (error) {
+            
+        }
     }
 
     getTagClass(tag){ //we want to be able to call the cards in our render to get the correct class to add as tag

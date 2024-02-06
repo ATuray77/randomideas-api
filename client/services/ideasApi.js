@@ -10,4 +10,4 @@ class IdeasApi {
   }
 }
 
-export default new IdeasApi();
+export default new IdeasApi();//export and initiate IdeasApi class all at once
